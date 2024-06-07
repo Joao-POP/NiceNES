@@ -1,5 +1,4 @@
 #include "Emulator.h"
-#include "Log.h"
 
 namespace sn {
 void parseControllerConf(std::string filepath,
@@ -8,16 +7,6 @@ void parseControllerConf(std::string filepath,
 }
 
 int main(int argc, char **argv) {
-  std::ofstream logFile("simplenes.log"), cpuTraceFile;
-  sn::TeeStream logTee(logFile, std::cout);
-
-  if (logFile.is_open() && logFile.good())
-    sn::Log::get().setLogStream(logTee);
-  else
-    sn::Log::get().setLogStream(std::cout);
-
-  sn::Log::get().setLevel(sn::Info);
-
   std::string path;
 
   // Default keybindings
@@ -54,19 +43,12 @@ int main(int argc, char **argv) {
                    "to --width\n"
                 << std::endl;
       return 0;
-    } else if (std::strcmp(argv[i], "--log-cpu") == 0) {
-      sn::Log::get().setLevel(sn::CpuTrace);
-      cpuTraceFile.open("sn.cpudump");
-      sn::Log::get().setCpuTraceStream(cpuTraceFile);
-      LOG(sn::Info) << "CPU logging set." << std::endl;
     } else if (std::strcmp(argv[i], "-s") == 0 ||
                std::strcmp(argv[i], "--scale") == 0) {
       float scale;
       std::stringstream ss;
       if (i + 1 < argc && ss << argv[i + 1] && ss >> scale)
         emulator.setVideoScale(scale);
-      else
-        LOG(sn::Error) << "Setting scale from argument failed" << std::endl;
       ++i;
     } else if (std::strcmp(argv[i], "-w") == 0 ||
                std::strcmp(argv[i], "--width") == 0) {
@@ -74,8 +56,6 @@ int main(int argc, char **argv) {
       std::stringstream ss;
       if (i + 1 < argc && ss << argv[i + 1] && ss >> width)
         emulator.setVideoWidth(width);
-      else
-        LOG(sn::Error) << "Setting width from argument failed" << std::endl;
       ++i;
     } else if (std::strcmp(argv[i], "-H") == 0 ||
                std::strcmp(argv[i], "--height") == 0) {
@@ -83,8 +63,6 @@ int main(int argc, char **argv) {
       std::stringstream ss;
       if (i + 1 < argc && ss << argv[i + 1] && ss >> height)
         emulator.setVideoHeight(height);
-      else
-        LOG(sn::Error) << "Setting height from argument failed" << std::endl;
       ++i;
     } else if (argv[i][0] != '-')
       path = argv[i];

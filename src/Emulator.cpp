@@ -1,6 +1,5 @@
 #include "Emulator.h"
 #include "CPUOpcodes.h"
-#include "Log.h"
 
 namespace sn {
 Emulator::Emulator()
@@ -15,7 +14,7 @@ Emulator::Emulator()
                              [&](void) { return m_controller2.read(); }) ||
       !m_bus.setReadCallback(OAMDATA,
                              [&](void) { return m_ppu.getOAMData(); })) {
-    LOG(Error) << "Critical error: Failed to set I/O callbacks" << std::endl;
+    std::clog << "Critical error: Failed to set I/O callbacks" << std::endl;
   }
 
   if (!m_bus.setWriteCallback(PPUCTRL, [&](Byte b) { m_ppu.control(b); }) ||
@@ -33,7 +32,7 @@ Emulator::Emulator()
                                 m_controller2.strobe(b);
                               }) ||
       !m_bus.setWriteCallback(OAMDATA, [&](Byte b) { m_ppu.setOAMData(b); })) {
-    LOG(Error) << "Critical error: Failed to set I/O callbacks" << std::endl;
+    std::clog << "Critical error: Failed to set I/O callbacks" << std::endl;
   }
 
   m_ppu.setInterruptCallback([&]() { m_cpu.interrupt(InterruptType::NMI); });
@@ -48,7 +47,7 @@ void Emulator::run(std::string rom_path) {
       [&]() { m_cpu.interrupt(InterruptType::IRQ); },
       [&]() { m_pictureBus.updateMirroring(); });
   if (!m_mapper) {
-    LOG(Error) << "Creating Mapper failed. Probably unsupported." << std::endl;
+    std::clog << "Creating Mapper failed. Probably unsupported." << std::endl;
     return;
   }
 
@@ -89,9 +88,9 @@ void Emulator::run(std::string rom_path) {
         pause = !pause;
         if (!pause) {
           m_cycleTimer = std::chrono::high_resolution_clock::now();
-          LOG(Info) << "Paused." << std::endl;
+          std::clog << "Paused." << std::endl;
         } else {
-          LOG(Info) << "Unpaused." << std::endl;
+          std::clog << "Unpaused." << std::endl;
         }
       } else if (pause && event.type == sf::Event::KeyReleased &&
                  event.key.code == sf::Keyboard::F3) {
@@ -104,12 +103,6 @@ void Emulator::run(std::string rom_path) {
           // CPU
           m_cpu.step();
         }
-      } else if (focus && event.type == sf::Event::KeyReleased &&
-                 event.key.code == sf::Keyboard::F4) {
-        Log::get().setLevel(Info);
-      } else if (focus && event.type == sf::Event::KeyReleased &&
-                 event.key.code == sf::Keyboard::F5) {
-        Log::get().setLevel(InfoVerbose);
       }
     }
 
@@ -144,26 +137,26 @@ void Emulator::DMA(Byte page) {
   if (page_ptr != nullptr) {
     m_ppu.doDMA(page_ptr);
   } else {
-    LOG(Error) << "Can't get pageptr for DMA" << std::endl;
+    std::clog << "Can't get pageptr for DMA" << std::endl;
   }
 }
 
 void Emulator::setVideoHeight(int height) {
   m_screenScale = height / float(NESVideoHeight);
-  LOG(Info) << "Scale: " << m_screenScale
+  std::clog << "Scale: " << m_screenScale
             << " set. Screen: " << int(NESVideoWidth * m_screenScale) << "x"
             << int(NESVideoHeight * m_screenScale) << std::endl;
 }
 
 void Emulator::setVideoWidth(int width) {
   m_screenScale = width / float(NESVideoWidth);
-  LOG(Info) << "Scale: " << m_screenScale
+  std::clog << "Scale: " << m_screenScale
             << " set. Screen: " << int(NESVideoWidth * m_screenScale) << "x"
             << int(NESVideoHeight * m_screenScale) << std::endl;
 }
 void Emulator::setVideoScale(float scale) {
   m_screenScale = scale;
-  LOG(Info) << "Scale: " << m_screenScale
+  std::clog << "Scale: " << m_screenScale
             << " set. Screen: " << int(NESVideoWidth * m_screenScale) << "x"
             << int(NESVideoHeight * m_screenScale) << std::endl;
 }

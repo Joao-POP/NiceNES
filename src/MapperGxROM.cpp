@@ -1,5 +1,5 @@
 #include "MapperGxROM.h"
-#include "Log.h"
+
 namespace sn {
 
 MapperGxROM::MapperGxROM(Cartridge &cart,
@@ -34,6 +34,7 @@ Byte MapperGxROM::readCHR(Address address) {
 NameTableMirroring MapperGxROM::getNameTableMirroring() { return m_mirroring; }
 
 void MapperGxROM::writeCHR(Address, Byte) {
-  LOG(Info) << "not expecting writes here";
+  std::clog << "not expecting writes here";
 }
+
 } // namespace sn

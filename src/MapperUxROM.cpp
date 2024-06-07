@@ -1,5 +1,4 @@
 #include "MapperUxROM.h"
-#include "Log.h"
 
 namespace sn {
 MapperUxROM::MapperUxROM(Cartridge &cart)
@@ -7,7 +6,7 @@ MapperUxROM::MapperUxROM(Cartridge &cart)
   if (cart.getVROM().size() == 0) {
     m_usesCharacterRAM = true;
     m_characterRAM.resize(0x2000);
-    LOG(Info) << "Uses character RAM" << std::endl;
+    std::clog << "Uses character RAM" << std::endl;
   } else
     m_usesCharacterRAM = false;
 
@@ -35,7 +34,8 @@ void MapperUxROM::writeCHR(Address addr, Byte value) {
   if (m_usesCharacterRAM)
     m_characterRAM[addr] = value;
   else
-    LOG(Info) << "Read-only CHR memory write attempt at " << std::hex << addr
+    std::clog << "Read-only CHR memory write attempt at " << std::hex << addr
               << std::endl;
 }
+
 } // namespace sn

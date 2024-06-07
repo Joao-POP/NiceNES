@@ -1,5 +1,4 @@
 #include "MapperColorDreams.h"
-#include "Log.h"
 
 namespace sn {
 
@@ -35,4 +34,5 @@ NameTableMirroring MapperColorDreams::getNameTableMirroring() {
 }
 
 void MapperColorDreams::writeCHR(Address, Byte) {}
+
 } // namespace sn

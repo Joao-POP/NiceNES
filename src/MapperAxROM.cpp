@@ -1,5 +1,4 @@
 #include "MapperAxROM.h"
-#include "Log.h"
 
 namespace sn {
 MapperAxROM::MapperAxROM(Cartridge &cart,
@@ -7,11 +6,11 @@ MapperAxROM::MapperAxROM(Cartridge &cart,
     : Mapper(cart, Mapper::AxROM), m_mirroring(OneScreenLower),
       m_mirroringCallback(mirroring_cb), m_prgBank(0) {
   if (cart.getROM().size() >= 0x8000) {
-    LOG(Info) << "Using PRG-ROM OK" << std::endl;
+    std::clog << "Using PRG-ROM OK" << std::endl;
   }
   if (cart.getVROM().size() == 0) {
     m_characterRAM.resize(0x2000);
-    LOG(Info) << "Uses Character RAM OK" << std::endl;
+    std::clog << "Uses Character RAM OK" << std::endl;
   }
 }
 

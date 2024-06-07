@@ -1,5 +1,4 @@
 #include "PictureBus.h"
-#include "Log.h"
 
 namespace sn {
 
@@ -77,41 +76,37 @@ void PictureBus::updateMirroring() {
   case Horizontal:
     NameTable0 = NameTable1 = 0;
     NameTable2 = NameTable3 = 0x400;
-    LOG(InfoVerbose)
-        << "Horizontal Name Table mirroring set. (Vertical Scrolling)"
-        << std::endl;
+    std::clog << "Horizontal Name Table mirroring set. (Vertical Scrolling)"
+              << std::endl;
     break;
   case Vertical:
     NameTable0 = NameTable2 = 0;
     NameTable1 = NameTable3 = 0x400;
-    LOG(InfoVerbose)
-        << "Vertical Name Table mirroring set. (Horizontal Scrolling)"
-        << std::endl;
+    std::clog << "Vertical Name Table mirroring set. (Horizontal Scrolling)"
+              << std::endl;
     break;
   case OneScreenLower:
     NameTable0 = NameTable1 = NameTable2 = NameTable3 = 0;
-    LOG(InfoVerbose) << "Single Screen mirroring set with lower bank."
-                     << std::endl;
+    std::clog << "Single Screen mirroring set with lower bank." << std::endl;
     break;
   case OneScreenHigher:
     NameTable0 = NameTable1 = NameTable2 = NameTable3 = 0x400;
-    LOG(InfoVerbose) << "Single Screen mirroring set with higher bank."
-                     << std::endl;
+    std::clog << "Single Screen mirroring set with higher bank." << std::endl;
     break;
   case FourScreen:
     NameTable0 = m_RAM.size();
-    LOG(InfoVerbose) << "FourScreen mirroring." << std::endl;
+    std::clog << "FourScreen mirroring." << std::endl;
     break;
   default:
     NameTable0 = NameTable1 = NameTable2 = NameTable3 = 0;
-    LOG(Error) << "Unsupported Name Table mirroring : "
-               << m_mapper->getNameTableMirroring() << std::endl;
+    std::clog << "Unsupported Name Table mirroring : "
+              << m_mapper->getNameTableMirroring() << std::endl;
   }
 }
 
 bool PictureBus::setMapper(Mapper *mapper) {
   if (!mapper) {
-    LOG(Error) << "Mapper argument is nullptr" << std::endl;
+    std::clog << "Mapper argument is nullptr" << std::endl;
     return false;
   }
 

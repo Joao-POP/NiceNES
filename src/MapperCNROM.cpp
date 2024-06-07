@@ -1,5 +1,4 @@
 #include "MapperCNROM.h"
-#include "Log.h"
 
 namespace sn {
 MapperCNROM::MapperCNROM(Cartridge &cart)
@@ -27,7 +26,8 @@ Byte MapperCNROM::readCHR(Address addr) {
 }
 
 void MapperCNROM::writeCHR(Address addr, Byte) {
-  LOG(Info) << "Read-only CHR memory write attempt at " << std::hex << addr
+  std::clog << "Read-only CHR memory write attempt at " << std::hex << addr
             << std::endl;
 }
+
 } // namespace sn

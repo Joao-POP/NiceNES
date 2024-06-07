@@ -1,5 +1,4 @@
 #include "Controller.h"
-#include "Log.h"
 
 namespace sn {
 // trim from start (construct new string)
@@ -63,16 +62,16 @@ void parseControllerConf(std::string filepath,
            it2 = std::find(std::begin(keys), std::end(keys),
                            ltrim(rtrim(line.substr(divider + 1))));
       if (it == std::end(buttonStrings) || it2 == std::end(keys)) {
-        LOG(Error) << "Invalid key in configuration file at Line " << line_no
-                   << std::endl;
+        std::clog << "Invalid key in configuration file at Line " << line_no
+                  << std::endl;
         continue;
       }
       auto i = std::distance(std::begin(buttonStrings), it);
       auto key = std::distance(std::begin(keys), it2);
       (state == Player1 ? p1 : p2)[i] = static_cast<sf::Keyboard::Key>(key);
     } else
-      LOG(Error) << "Invalid line in key configuration at Line " << line_no
-                 << std::endl;
+      std::clog << "Invalid line in key configuration at Line " << line_no
+                << std::endl;
 
     ++line_no;
   }

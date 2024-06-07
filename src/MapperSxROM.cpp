@@ -1,5 +1,4 @@
 #include "MapperSxROM.h"
-#include "Log.h"
 
 namespace sn {
 MapperSxROM::MapperSxROM(Cartridge &cart,
@@ -12,9 +11,9 @@ MapperSxROM::MapperSxROM(Cartridge &cart,
   if (cart.getVROM().size() == 0) {
     m_usesCharacterRAM = true;
     m_characterRAM.resize(0x2000);
-    LOG(Info) << "Uses character RAM" << std::endl;
+    std::clog << "Uses character RAM" << std::endl;
   } else {
-    LOG(Info) << "Using CHR-ROM" << std::endl;
+    std::clog << "Using CHR-ROM" << std::endl;
     m_usesCharacterRAM = false;
     m_firstBankCHR = &cart.getVROM()[0];
     m_secondBankCHR = &cart.getVROM()[0x1000 * m_regCHR1];
@@ -90,7 +89,7 @@ void MapperSxROM::writePRG(Address addr, Byte value) {
       } else {
         // TODO PRG-RAM
         if ((m_tempRegister & 0x10) == 0x10) {
-          LOG(Info) << "PRG-RAM activated" << std::endl;
+          std::clog << "PRG-RAM activated" << std::endl;
         }
 
         m_tempRegister &= 0xf;
@@ -142,7 +141,7 @@ void MapperSxROM::writeCHR(Address addr, Byte value) {
   if (m_usesCharacterRAM)
     m_characterRAM[addr] = value;
   else
-    LOG(Info) << "Read-only CHR memory write attempt at " << std::hex << addr
+    std::clog << "Read-only CHR memory write attempt at " << std::hex << addr
               << std::endl;
 }
 } // namespace sn

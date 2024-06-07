@@ -1,5 +1,4 @@
 #include "MapperMMC3.h"
-#include "Log.h"
 
 namespace sn {
 MapperMMC3::MapperMMC3(Cartridge &cart, std::function<void()> interrupt_cb,

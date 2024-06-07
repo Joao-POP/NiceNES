@@ -1,5 +1,4 @@
 #include "PPU.h"
-#include "Log.h"
 
 namespace sn {
 PPU::PPU(PictureBus &bus, VirtualScreen &screen)
@@ -274,7 +273,7 @@ void PPU::step() {
 
     break;
   default:
-    LOG(Error) << "Well, this shouldn't have happened." << std::endl;
+    std::clog << "Well, this shouldn't have happened." << std::endl;
   }
 
   ++m_cycle;

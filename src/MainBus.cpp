@@ -1,5 +1,4 @@
 #include "MainBus.h"
-#include "Log.h"
 
 namespace sn {
 MainBus::MainBus() : m_RAM(0x800, 0), m_mapper(nullptr) {}
@@ -16,8 +15,8 @@ Byte MainBus::read(Address addr) {
       // Second object is the pointer to the function object
       // Dereference the function pointer and call it
       else
-        LOG(InfoVerbose) << "No read callback registered for I/O register at: "
-                         << std::hex << +addr << std::endl;
+        std::clog << "No read callback registered for I/O register at: "
+                  << std::hex << +addr << std::endl;
     } else if (addr < 0x4018 && addr >= 0x4014) // Only *some* IO registers
     {
       auto it = m_readCallbacks.find(static_cast<IORegisters>(addr));
@@ -26,15 +25,13 @@ Byte MainBus::read(Address addr) {
       // Second object is the pointer to the function object
       // Dereference the function pointer and call it
       else
-        LOG(InfoVerbose) << "No read callback registered for I/O register at: "
-                         << std::hex << +addr << std::endl;
+        std::clog << "No read callback registered for I/O register at: "
+                  << std::hex << +addr << std::endl;
     } else
-      LOG(InfoVerbose) << "Read access attempt at: " << std::hex << +addr
-                       << std::endl;
+      std::clog << "Read access attempt at: " << std::hex << +addr << std::endl;
   } else if (addr < 0x6000) {
-    LOG(InfoVerbose)
-        << "Expansion ROM read attempted. This is currently unsupported"
-        << std::endl;
+    std::clog << "Expansion ROM read attempted. This is currently unsupported"
+              << std::endl;
   } else if (addr < 0x8000) {
     if (m_mapper->hasExtendedRAM()) {
       return m_extRAM[addr - 0x6000];
@@ -57,8 +54,8 @@ void MainBus::write(Address addr, Byte value) {
       // Second object is the pointer to the function object
       // Dereference the function pointer and call it
       else
-        LOG(InfoVerbose) << "No write callback registered for I/O register at: "
-                         << std::hex << +addr << std::endl;
+        std::clog << "No write callback registered for I/O register at: "
+                  << std::hex << +addr << std::endl;
     } else if (addr < 0x4017 && addr >= 0x4014) // only some registers
     {
       auto it = m_writeCallbacks.find(static_cast<IORegisters>(addr));
@@ -67,15 +64,14 @@ void MainBus::write(Address addr, Byte value) {
       // Second object is the pointer to the function object
       // Dereference the function pointer and call it
       else
-        LOG(InfoVerbose) << "No write callback registered for I/O register at: "
-                         << std::hex << +addr << std::endl;
+        std::clog << "No write callback registered for I/O register at: "
+                  << std::hex << +addr << std::endl;
     } else
-      LOG(InfoVerbose) << "Write access attempt at: " << std::hex << +addr
-                       << std::endl;
+      std::clog << "Write access attempt at: " << std::hex << +addr
+                << std::endl;
   } else if (addr < 0x6000) {
-    LOG(InfoVerbose)
-        << "Expansion ROM access attempted. This is currently unsupported"
-        << std::endl;
+    std::clog << "Expansion ROM access attempted. This is currently unsupported"
+              << std::endl;
   } else if (addr < 0x8000) {
     if (m_mapper->hasExtendedRAM()) {
       m_extRAM[addr - 0x6000] = value;
@@ -90,17 +86,17 @@ const Byte *MainBus::getPagePtr(Byte page) {
   if (addr < 0x2000) {
     return &m_RAM[addr & 0x7ff];
   } else if (addr < 0x4020) {
-    LOG(Error) << "Register address memory pointer access attempt" << std::endl;
+    std::clog << "Register address memory pointer access attempt" << std::endl;
   } else if (addr < 0x6000) {
-    LOG(Error) << "Expansion ROM access attempted, which is unsupported"
-               << std::endl;
+    std::clog << "Expansion ROM access attempted, which is unsupported"
+              << std::endl;
   } else if (addr < 0x8000) {
     if (m_mapper->hasExtendedRAM()) {
       return &m_extRAM[addr - 0x6000];
     }
   } else {
-    LOG(Error) << "Unexpected DMA request: " << std::hex << "0x" << +addr
-               << " (" << +page << ")" << std::dec << std::endl;
+    std::clog << "Unexpected DMA request: " << std::hex << "0x" << +addr << " ("
+              << +page << ")" << std::dec << std::endl;
   }
   return nullptr;
 }
@@ -109,7 +105,7 @@ bool MainBus::setMapper(Mapper *mapper) {
   m_mapper = mapper;
 
   if (!mapper) {
-    LOG(Error) << "Mapper pointer is nullptr" << std::endl;
+    std::clog << "Mapper pointer is nullptr" << std::endl;
     return false;
   }
 
@@ -122,7 +118,7 @@ bool MainBus::setMapper(Mapper *mapper) {
 bool MainBus::setWriteCallback(IORegisters reg,
                                std::function<void(Byte)> callback) {
   if (!callback) {
-    LOG(Error) << "callback argument is nullptr" << std::endl;
+    std::clog << "callback argument is nullptr" << std::endl;
     return false;
   }
   return m_writeCallbacks.emplace(reg, callback).second;
@@ -131,7 +127,7 @@ bool MainBus::setWriteCallback(IORegisters reg,
 bool MainBus::setReadCallback(IORegisters reg,
                               std::function<Byte(void)> callback) {
   if (!callback) {
-    LOG(Error) << "callback argument is nullptr" << std::endl;
+    std::clog << "callback argument is nullptr" << std::endl;
     return false;
   }
   return m_readCallbacks.emplace(reg, callback).second;

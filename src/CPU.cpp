@@ -1,6 +1,5 @@
 #include "CPU.h"
 #include "CPUOpcodes.h"
-#include "Log.h"
 
 namespace sn {
 CPU::CPU(MainBus &mem) : m_pendingNMI(false), m_pendingIRQ(false), m_bus(mem) {}
@@ -106,17 +105,6 @@ void CPU::step() {
     return;
   }
 
-  int psw = f_N << 7 | f_V << 6 | 1 << 5 | f_D << 3 | f_I << 2 | f_Z << 1 | f_C;
-  LOG_CPU << std::hex << std::setfill('0') << std::uppercase << std::setw(4)
-          << +r_PC << "  " << std::setw(2) << +m_bus.read(r_PC) << "  "
-          << "A:" << std::setw(2) << +r_A << " "
-          << "X:" << std::setw(2) << +r_X << " "
-          << "Y:" << std::setw(2) << +r_Y << " "
-          << "P:" << std::setw(2) << psw << " "
-          << "SP:" << std::setw(2) << +r_SP << /*std::endl;*/ " "
-          << "CYC:" << std::setw(3) << std::setfill(' ') << std::dec
-          << ((m_cycles - 1) * 3) % 341 << std::endl;
-
   Byte opcode = m_bus.read(r_PC++);
 
   auto CycleLength = OperationCycles[opcode];
@@ -131,7 +119,7 @@ void CPU::step() {
     // m_cycles %= 340; //compatibility with Nintendulator log
     // m_skipCycles = 0; //for TESTING
   } else {
-    LOG(Error) << "Unrecognized opcode: " << std::hex << +opcode << std::endl;
+    std::clog << "Unrecognized opcode: " << std::hex << +opcode << std::endl;
   }
 }
 
