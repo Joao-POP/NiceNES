@@ -1,5 +1,6 @@
 #ifndef MAPPERUXROM_H
 #define MAPPERUXROM_H
+
 #include "Mapper.h"
 
 namespace sn {
@@ -21,4 +22,5 @@ private:
   std::vector<Byte> m_characterRAM;
 };
 } // namespace sn
+
 #endif // MAPPERUXROM_H
