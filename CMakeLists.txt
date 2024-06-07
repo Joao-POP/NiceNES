@@ -18,6 +18,7 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(nicenes ${SOURCES})
+target_precompile_headers(nicenes PRIVATE "include/pch.h")
 target_link_libraries(nicenes PRIVATE sfml-graphics)
 target_compile_features(nicenes PRIVATE cxx_std_20)
 
