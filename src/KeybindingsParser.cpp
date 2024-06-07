@@ -1,9 +1,3 @@
-#include <algorithm>
-#include <cctype>
-#include <fstream>
-#include <string>
-#include <vector>
-
 #include "Controller.h"
 #include "Log.h"
 

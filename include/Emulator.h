@@ -1,7 +1,5 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
-#include <SFML/Graphics.hpp>
-#include <chrono>
 
 #include "CPU.h"
 #include "Controller.h"

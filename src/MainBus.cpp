@@ -1,6 +1,5 @@
 #include "MainBus.h"
 #include "Log.h"
-#include <cstring>
 
 namespace sn {
 MainBus::MainBus() : m_RAM(0x800, 0), m_mapper(nullptr) {}

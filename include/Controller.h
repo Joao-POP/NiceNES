@@ -1,8 +1,5 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-#include <SFML/Window.hpp>
-#include <cstdint>
-#include <vector>
 
 namespace sn {
 using Byte = std::uint8_t;

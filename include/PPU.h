@@ -1,11 +1,10 @@
 #ifndef PPU_H
 #define PPU_H
+
 #include "MainBus.h"
 #include "PaletteColors.h"
 #include "PictureBus.h"
 #include "VirtualScreen.h"
-#include <array>
-#include <functional>
 
 namespace sn {
 const int ScanlineCycleLength = 341;

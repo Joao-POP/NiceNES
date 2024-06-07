@@ -1,11 +1,8 @@
 #ifndef MEMORY_H
 #define MEMORY_H
+
 #include "Cartridge.h"
 #include "Mapper.h"
-#include <functional>
-#include <memory>
-#include <unordered_map>
-#include <vector>
 
 namespace sn {
 enum IORegisters {

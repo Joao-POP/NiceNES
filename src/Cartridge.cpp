@@ -1,8 +1,6 @@
 #include "Cartridge.h"
 #include "Log.h"
 #include "Mapper.h"
-#include <fstream>
-#include <string>
 
 namespace sn {
 Cartridge::Cartridge()

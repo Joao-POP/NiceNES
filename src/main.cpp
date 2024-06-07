@@ -1,7 +1,5 @@
 #include "Emulator.h"
 #include "Log.h"
-#include <sstream>
-#include <string>
 
 namespace sn {
 void parseControllerConf(std::string filepath,

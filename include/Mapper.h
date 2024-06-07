@@ -1,9 +1,8 @@
 #ifndef MAPPER_H
 #define MAPPER_H
+
 #include "CPUOpcodes.h"
 #include "Cartridge.h"
-#include <functional>
-#include <memory>
 
 namespace sn {
 enum NameTableMirroring {

@@ -1,10 +1,5 @@
 #ifndef LOG_H
 #define LOG_H
-#include <cstring>
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include <string>
 
 #ifndef __FILENAME__
 #define __FILENAME__ __FILE__

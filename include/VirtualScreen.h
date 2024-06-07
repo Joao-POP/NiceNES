@@ -1,6 +1,5 @@
 #ifndef VIRTUALSCREEN_H
 #define VIRTUALSCREEN_H
-#include <SFML/Graphics.hpp>
 
 namespace sn {
 class VirtualScreen : public sf::Drawable {

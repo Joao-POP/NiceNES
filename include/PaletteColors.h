@@ -1,5 +1,3 @@
-#include <SFML/Config.hpp>
-
 // Colors in RGBA (8 bit colors)
 const sf::Uint32 colors[] = {
     0x666666ff, 0x002a88ff, 0x1412a7ff, 0x3b00a4ff, 0x5c007eff, 0x6e0040ff,

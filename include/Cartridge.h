@@ -1,8 +1,5 @@
 #ifndef CARTRIDGE_H
 #define CARTRIDGE_H
-#include <cstdint>
-#include <string>
-#include <vector>
 
 namespace sn {
 using Byte = std::uint8_t;

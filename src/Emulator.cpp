@@ -2,9 +2,6 @@
 #include "CPUOpcodes.h"
 #include "Log.h"
 
-#include <chrono>
-#include <thread>
-
 namespace sn {
 Emulator::Emulator()
     : m_cpu(m_bus), m_ppu(m_pictureBus, m_emulatorScreen), m_screenScale(3.f),

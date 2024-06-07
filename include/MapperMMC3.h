@@ -1,6 +1,6 @@
 #pragma once
+
 #include "Mapper.h"
-#include <array>
 
 namespace sn {
 

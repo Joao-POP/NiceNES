@@ -1,7 +1,6 @@
 #include "CPU.h"
 #include "CPUOpcodes.h"
 #include "Log.h"
-#include <iomanip>
 
 namespace sn {
 CPU::CPU(MainBus &mem) : m_pendingNMI(false), m_pendingIRQ(false), m_bus(mem) {}

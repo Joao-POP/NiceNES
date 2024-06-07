@@ -1,8 +1,8 @@
 #ifndef PICTUREBUS_H
 #define PICTUREBUS_H
+
 #include "Cartridge.h"
 #include "Mapper.h"
-#include <vector>
 
 namespace sn {
 class PictureBus {
