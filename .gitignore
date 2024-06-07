@@ -3,4 +3,9 @@
 *.depend
 *.kdev4
 .kdev*
+
+# Common build/ directory.
 build/
+
+# clangd's .cache
+.cache/
